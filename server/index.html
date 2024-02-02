@@ -7,21 +7,12 @@
   </head>
   <body>
     <script>
-      let socket = new WebSocket("ws://localhost:8080/ws");
+      const socket = new WebSocket("ws://localhost:8080/ws");
 
-      console.log("attempting websocket connection");
-
-      socket.onopen = () => {
-        console.log("successfully ");
-        socket.send("hi form the client");
-      };
-
-      socket.onclose = (e) => {
-        console.log("socket closed connection", event);
-      };
-
-      socket.onerror = (error) => {
-        console.log("Socket Error:", error);
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log(data);
+        // Update UI with the received data
       };
     </script>
   </body>
