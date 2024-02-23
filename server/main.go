@@ -21,7 +21,6 @@ func main() {
 	r := mux.NewRouter()
 	Update()
 	r.HandleFunc("/ws", handleWebSocket)
-	fmt.Println("run")
 
 	http.ListenAndServe(":8080", r)
 }
@@ -41,13 +40,10 @@ func initDB() {
 
 // update for every 3 second
 func Update() {
-	for {
-		user := User{ID: 1, Username: "alex"}
-		db.Create(user)
-		time.Sleep(3 * time.Second)
-		fmt.Println("is work ")
-		break
-	}
+
+	user := User{ID: 1, Username: "alex"}
+	db.Create(user)
+	fmt.Println("is work ")
 
 }
 
@@ -82,7 +78,12 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			break
 		}
+		active := false
+		ok := len(data)
+		if len(data) <= ok {
+			Update(bool)
 
+		}
 		// Marshal data to JSON for WebSocket transmission
 		bytes, err := json.Marshal(data)
 		if err != nil {
@@ -96,7 +97,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			break
 		}
+
 		time.Sleep(3 * time.Second)
-		break
 	}
 }
